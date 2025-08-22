@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "properties": {
+    "proxmox_node": {
+      "type": "string",
+      "description": "Proxmox node name where VMs will be created"
+    },
+    "network_bridge": {
+      "type": "string",
+      "default": "vmbr0",
+      "description": "Proxmox network bridge for VM networking"
+    },
+    "cores": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of CPU cores"
+    },
+    "memory": {
+      "type": "integer",
+      "description": "Memory in MB"
+    },
+    "disk_size": {
+      "type": "integer",
+      "description": "Disk size in GB"
+    },
+    "architecture": {
+      "enum": ["amd64", "arm64"],
+      "description": "CPU architecture"
+    },
+    "disk_ssd": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable SSD emulation for better performance"
+    },
+    "disk_discard": {
+      "type": "boolean",
+      "default": true,
+      "description": "Enable TRIM/discard support"
+    },
+    "disk_iothread": {
+      "type": "boolean",
+      "default": false,
+      "description": "Enable dedicated iothread for disk operations"
+    },
+    "subnet": {
+      "type": "string",
+      "description": "Static IP subnet (CIDR notation, e.g., 192.168.1.0/24). VMs will get IPs based on VM ID within this subnet. If not provided, DHCP will be used."
+    },
+    "gateway": {
+      "type": "string",
+      "description": "Gateway IP address (required if subnet is provided)"
+    },
+    "dns_servers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "DNS server addresses (optional, defaults to 8.8.8.8, 8.8.4.4)"
+    }
+  },
+  "required": [
+    "proxmox_node",
+    "cores",
+    "memory",
+    "disk_size",
+    "architecture"
+  ],
+  "dependencies": {
+    "subnet": ["gateway"]
+  }
+}
