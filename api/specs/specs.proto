@@ -1,0 +1,17 @@
+syntax = "proto3";
+package proxmoxspecs;
+
+option go_package = "github.com/alinanova21/omni-infra-provider-proxmox/api/specs";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+// MachineSpec is stored in Omni in the infra provisioner state.
+message MachineSpec {
+  string uuid = 1;
+  string schematic = 2;
+  string talos_version = 3;
+  int32 vm_id = 4;
+  string node = 5;
+  string image_name = 6;
+}
